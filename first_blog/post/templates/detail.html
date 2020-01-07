@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{instance.title}}|{{block.super}}
+{% endblock title %}
+
+{% block content %}
+
+
+
+<div class="col-md-7 offset-md-3">
+<!-- {{block.super}} -->
+    <h3> {{title}} - Detail <small> {{instance.timestamp}} </small> </h3>
+    {% if instance.image %}
+    <img src="{{instance.image.url}}" class="image-responsive" /><br/><br/>
+    {% endif %}
+    <h4> {{instance.title}}
+        {% if instance.draft %}  
+            <small style="color: red;"><strong> Draft </strong></small> 
+        {% endif %}
+        <small> {{instance.publish}} </small>
+    </h4>
+    {% if instance.user.get_full_name %}
+        <small> Auther : {{ instance.user.get_full_name }}</small>
+    {% endif %}
+    {{instance.content|linebreaks}}
+    
+<!-- Facebook comment plugin -->
+    <div class="fb-comments" data-href="{{request.build_absolute_uri}}" data-width="" data-numposts="5"></div>
+
+    <!-- Facebook like and share button -->
+    <div class="fb-like" data-href="{{request.build_absolute_uri}}" data-width="" data-layout="standard" data-action="like" data-size="small" data-share="true"></div><br/><br/>
+
+<!-- Sharing links -->
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url={{request.build_absolute_uri}}&title={{instance.title}}&summary={{share_string}}">
+        Linkedin
+    </a> &nbsp;
+
+    <a href="https://twitter.com/home?status=I'm%20going%20to%20learn%20to%20Code...%20Come%20build%20an%20web%20apsp%20with%20me!%20%23CFE%20and%20@justinmitchel%20{{request.build_absolute_uri}}">
+        Twitter
+        </a>
+
+</div>
+{% endblock content %}

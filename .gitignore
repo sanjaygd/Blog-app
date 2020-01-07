@@ -1,0 +1,5 @@
+venv/
+media_cdn/
+static_cdn/ 
+first_blog/db.sqlite3
+first_blog/post/migrations
