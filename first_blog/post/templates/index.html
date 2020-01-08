@@ -1,4 +1,3 @@
-
 {% extends 'base.html' %}
 
 {% block title %}
@@ -16,7 +15,7 @@
 <div class="row">
     {% for obj in object_list %}
     <div class="col-md-6 offset-md-3">
-        <!-- <a href="{% url 'post:detail' pk=obj.id %}"> {{obj.title}} </a> -->
+        
         <!-- <a href=" {{obj.get_absolute_url}} ">  </a> -->
         <div class="card" style="width: 25rem;">{{obj.id}}
             {% if obj.image %}

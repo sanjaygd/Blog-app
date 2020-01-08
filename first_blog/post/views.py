@@ -2,7 +2,7 @@ from django.db.models import Q
 from urllib.parse import quote_plus
 from django.http import HttpResponseRedirect
 from django.shortcuts import render,get_object_or_404,redirect,Http404
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 from .models import Post
 from .forms import PostForm
@@ -51,10 +51,6 @@ def post_list(request):
             Q(user__first_name__icontains=query)|
             Q(user__last_name__icontains=query)
         ).distinct()
-    # paginator = Paginator(queryset_list,1) # Show 25 contacts per page
-    # page = request.GET.get('page')
-    # posts = paginator.get_page(page)
-
     paginator = Paginator(queryset_list, 4) # Show 25 contacts per page
     page_request_var = "page"
     page = request.GET.get(page_request_var)
@@ -77,8 +73,8 @@ def post_list(request):
     return render(request, 'index.html', context)
 
 
-def detail(request,pk):
-    obj = get_object_or_404(Post, id=pk)
+def detail(request,slug): #slug replaced pk
+    obj = get_object_or_404(Post, slug=slug)
     share_string = quote_plus(obj.content)
     context = {
         'title':obj.title,

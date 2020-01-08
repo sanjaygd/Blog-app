@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
-from django.shortcuts import reverse
+from django.urls import reverse
+# from django.shortcuts import reverse
 from django.db.models.signals import pre_save
 from django.utils import timezone
 from django.utils.text import slugify
@@ -36,10 +37,15 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-    def get_absolute_url(self):
-        return reverse('post:detail', kwargs={'pk':self.id})
-        # return 'detail/{}'.format(self.id)
+    
 
+    # def get_absolute_url(self):
+    #     return reverse('post:detail', kwargs={'pk':self.id})
+    #     # return 'detail/{}'.format(self.id)
+    # # Add this part in url to get detail page   <a href="{% url 'post:detail' pk=obj.id %}"> {{obj.title}} </a>
+
+    def get_absolute_url(self):
+        return reverse('post:detail', kwargs={'slug':self.slug})
 
     class Meta:
         ordering = ["-timestamp", "-updates"]
@@ -65,3 +71,5 @@ def pre_save_post_reciever(sender, instance, *args, **kwargs):
 
 
 pre_save.connect(pre_save_post_reciever, sender=Post)
+
+    
